@@ -1,7 +1,6 @@
 package net.chemthunder.foxglove.impl.index;
 
 import net.acoyt.acornlib.api.registrants.ItemRegistrant;
-import net.chemthunder.foxglove.api.magic.Spell;
 import net.chemthunder.foxglove.impl.Foxglove;
 import net.chemthunder.foxglove.impl.component.BarkComponent;
 import net.chemthunder.foxglove.impl.item.CharmedBarkItem;

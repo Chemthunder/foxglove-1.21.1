@@ -1,13 +1,11 @@
 package net.chemthunder.foxglove.impl.item;
 
-import com.ibm.icu.text.TimeUnitFormat;
 import net.acoyt.acornlib.api.util.MiscUtils;
 import net.chemthunder.foxglove.api.magic.Spell;
 import net.chemthunder.foxglove.api.magic.SpellComponent;
 import net.chemthunder.foxglove.impl.cca.entity.HeldSpellComponent;
 import net.chemthunder.foxglove.impl.component.BarkComponent;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
-import net.chemthunder.foxglove.impl.index.FoxgloveSpellComponents;
 import net.chemthunder.foxglove.impl.util.SpellUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
