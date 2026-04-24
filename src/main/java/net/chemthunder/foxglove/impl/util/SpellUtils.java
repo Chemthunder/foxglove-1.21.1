@@ -1,8 +1,10 @@
 package net.chemthunder.foxglove.impl.util;
 
-import net.chemthunder.foxglove.api.magic.Spell;
-import net.chemthunder.foxglove.api.magic.SpellComponent;
+import net.chemthunder.foxglove.api.magic.spell.Spell;
+import net.chemthunder.foxglove.api.magic.spell.SpellComponent;
+import net.chemthunder.foxglove.impl.cca.entity.HeldSpellComponent;
 import net.chemthunder.foxglove.impl.index.FoxgloveSpellComponents;
+import net.minecraft.entity.LivingEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,11 +38,15 @@ public class SpellUtils {
         );
     }
 
+    public static Spell getSpell(LivingEntity entity) {
+        return HeldSpellComponent.KEY.get(entity).getHeldSpell();
+    }
+
     public static Spell createSpell() {
         return new Spell(generateName(), FoxgloveSpellComponents.COMPS.get(new Random().nextInt(FoxgloveSpellComponents.COMPS.size())));
     }
 
     public static String getSpellCompId(SpellComponent spellComponent) {
-        return "spell_component.foxglove." + spellComponent.getName().toLowerCase();
+        return "spell_component.foxglove." + spellComponent.name().toLowerCase();
     }
 }

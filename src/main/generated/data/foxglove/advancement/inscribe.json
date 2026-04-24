@@ -1,0 +1,25 @@
+{
+  "parent": "foxglove:obtain_bark",
+  "criteria": {
+    "inscribe": {
+      "trigger": "foxglove:inscribe"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.foxglove.inscribe.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "foxglove:charmed_bark"
+    },
+    "title": {
+      "translate": "advancements.foxglove.inscribe.title"
+    }
+  },
+  "requirements": [
+    [
+      "inscribe"
+    ]
+  ]
+}

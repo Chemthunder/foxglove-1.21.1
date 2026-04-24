@@ -1,5 +1,6 @@
 package net.chemthunder.foxglove.data;
 
+import net.chemthunder.foxglove.data.provider.FoxAdvancementGen;
 import net.chemthunder.foxglove.data.provider.resources.FoxLangGen;
 import net.chemthunder.foxglove.data.provider.resources.FoxModelGen;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
@@ -11,5 +12,7 @@ public class FoxgloveDataGen implements DataGeneratorEntrypoint {
 
         pack.addProvider(FoxLangGen::new);
         pack.addProvider(FoxModelGen::new);
+
+        pack.addProvider(FoxAdvancementGen::new);
 	}
 }

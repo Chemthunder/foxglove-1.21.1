@@ -1,4 +1,4 @@
-package net.chemthunder.foxglove.api.magic;
+package net.chemthunder.foxglove.api.magic.spell;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.util.StringIdentifiable;

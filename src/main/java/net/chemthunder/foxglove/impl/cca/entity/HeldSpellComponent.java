@@ -1,7 +1,7 @@
 package net.chemthunder.foxglove.impl.cca.entity;
 
 import net.acoyt.acornlib.api.util.MiscUtils;
-import net.chemthunder.foxglove.api.magic.Spell;
+import net.chemthunder.foxglove.api.magic.spell.Spell;
 import net.chemthunder.foxglove.impl.Foxglove;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -42,7 +42,7 @@ public class HeldSpellComponent implements AutoSyncedComponent, CommonTickingCom
 
     private void tickDebug() {
         if (this.player instanceof PlayerEntity p) {
-            p.sendMessage(Text.literal(this.getDuration() + " " + this.getHeldSpell().getName() + " " + this.getHeldSpell().getComponent().getName() + " " + this.getHeldSpell().getComponent().getType().asString()), true);
+            p.sendMessage(Text.literal(this.getDuration() + " " + this.getHeldSpell().getName() + " " + this.getHeldSpell().getComponent().name() + " " + this.getHeldSpell().getComponent().type().asString()), true);
         }
     }
 

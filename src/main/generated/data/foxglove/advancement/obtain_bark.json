@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:husbandry/root",
+  "criteria": {
+    "obtain_bark": {
+      "trigger": "foxglove:obtain_bark"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.foxglove.obtain_bark.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:iron_axe"
+    },
+    "title": {
+      "translate": "advancements.foxglove.obtain_bark.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_bark"
+    ]
+  ]
+}

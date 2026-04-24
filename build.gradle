@@ -67,6 +67,9 @@ dependencies {
 
     // trinkets
     modImplementation include("dev.emi:trinkets:${project.trinkets_version}")
+
+    // utils
+    modImplementation "maven.modrinth:tooltipfix:${project.tooltipfix_version}"
 }
 
 processResources {

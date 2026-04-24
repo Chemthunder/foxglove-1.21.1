@@ -1,6 +1,7 @@
 package net.chemthunder.foxglove.impl;
 
 import net.acoyt.acornlib.api.ALib;
+import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
 import net.chemthunder.foxglove.impl.index.FoxgloveSpellComponents;
@@ -20,6 +21,7 @@ public class Foxglove implements ModInitializer {
         FoxgloveItems.init();
         FoxgloveDataComponents.init();
         FoxgloveSpellComponents.init();
+        FoxgloveCriterions.init();
 
 		LOGGER.info("Hello Fabric world!");
 	}

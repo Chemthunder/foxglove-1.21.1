@@ -1,8 +1,8 @@
 package net.chemthunder.foxglove.impl.index;
 
 import net.acoyt.acornlib.api.util.MiscUtils;
-import net.chemthunder.foxglove.api.magic.SpellComponent;
-import net.chemthunder.foxglove.api.magic.SpellType;
+import net.chemthunder.foxglove.api.magic.spell.SpellComponent;
+import net.chemthunder.foxglove.api.magic.spell.SpellType;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
 import java.util.ArrayList;
@@ -21,10 +21,8 @@ public interface FoxgloveSpellComponents {
     SpellComponent WEIGHTED = register("weighted", SpellType.CURSE); // slows the player and makes them sink in water, increasing based on armor material protection value
     SpellComponent BLIGHTED = register("blighted", SpellType.CURSE); // burns when under sunlight
     SpellComponent LOCKJAW = register("lockjaw", SpellType.CURSE); // cannot eat, and cannot open chat.
-
-    // disables enchants for user
-    //
-
+    SpellComponent DIZZY = register("dizzy", SpellType.CURSE); // scrambles the names of items
+    SpellComponent LAZY_EYES = register("lazy_eyes", SpellType.CURSE); // offsets the player's crosshair >:3
 
     private static SpellComponent register(String name, Function<String, SpellComponent> factory) {
         SpellComponent component = factory.apply(name);
@@ -41,7 +39,7 @@ public interface FoxgloveSpellComponents {
     static void init() {}
 
     static void pairWithLangGen(FabricLanguageProvider.TranslationBuilder translationBuilder) {
-        COMPS.forEach(spellComponent -> translationBuilder.add("spell_component.foxglove." + spellComponent.getName().toLowerCase(), MiscUtils.formatString(spellComponent.getName())));
+        COMPS.forEach(spellComponent -> translationBuilder.add("spell_component.foxglove." + spellComponent.name().toLowerCase(), MiscUtils.formatString(spellComponent.name())));
     }
 
 

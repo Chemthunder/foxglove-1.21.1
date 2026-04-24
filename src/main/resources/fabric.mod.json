@@ -18,6 +18,9 @@
     "main": [
       "net.chemthunder.foxglove.impl.Foxglove"
     ],
+    "client": [
+      "net.chemthunder.foxglove.impl.FoxgloveClient"
+    ],
     "fabric-datagen": [
       "net.chemthunder.foxglove.data.FoxgloveDataGen"
     ],
