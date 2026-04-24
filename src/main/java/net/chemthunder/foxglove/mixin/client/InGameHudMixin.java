@@ -2,8 +2,9 @@ package net.chemthunder.foxglove.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.chemthunder.foxglove.impl.cca.entity.HeldSpellComponent;
-import net.chemthunder.foxglove.impl.index.FoxgloveSpellComponents;
+import net.chemthunder.foxglove.impl.cca.entity.CantripComponent;
+import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
+import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -21,7 +22,7 @@ public abstract class InGameHudMixin {
         PlayerEntity player = client.player;
 
         if (player != null) {
-            original.call(instance, texture, HeldSpellComponent.KEY.get(player).getHeldSpell().getComponent().equals(FoxgloveSpellComponents.LAZY_EYES) ? x - 30 : x, y, width, height);
+            original.call(instance, texture, MagicUtils.getCantripComponent(player).effect().equals(FoxgloveCantripEffects.LAZY_EYES) ? x - 30 : x, y, width, height);
         }
     }
 }

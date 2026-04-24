@@ -1,17 +1,19 @@
 package net.chemthunder.foxglove.impl.item;
 
+import com.nitron.nitrogen.util.interfaces.ColorableItem;
 import net.acoyt.acornlib.api.item.ModelVaryingItem;
 import net.acoyt.acornlib.api.util.MiscUtils;
-import net.chemthunder.foxglove.api.magic.spell.Spell;
-import net.chemthunder.foxglove.api.magic.spell.SpellComponent;
-import net.chemthunder.foxglove.api.magic.spell.SpellType;
+import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
+import net.chemthunder.foxglove.api.magic.cantrip.CantripApplicationCategory;
+import net.chemthunder.foxglove.api.magic.common.SpellCategory;
+import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
 import net.chemthunder.foxglove.impl.Foxglove;
-import net.chemthunder.foxglove.impl.cca.entity.HeldSpellComponent;
+import net.chemthunder.foxglove.impl.cca.entity.CantripComponent;
 import net.chemthunder.foxglove.impl.component.BarkComponent;
 import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
-import net.chemthunder.foxglove.impl.util.SpellUtils;
+import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
@@ -34,7 +36,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-public class CharmedBarkItem extends Item implements ModelVaryingItem {
+public class CharmedBarkItem extends Item implements ModelVaryingItem, ColorableItem {
     public CharmedBarkItem(Settings settings) {
         super(settings);
     }
@@ -42,13 +44,18 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         BarkComponent component = stack.get(FoxgloveDataComponents.BARK);
-        HeldSpellComponent spellComponent = HeldSpellComponent.KEY.get(user);
+        CantripComponent cantripComponent = CantripComponent.KEY.get(user);
 
         if (component != null) {
             if (!component.isEmpty()) {
-                Spell spell = component.spell();
 
-                spellComponent.set(1900, spell);
+                Cantrip cantrip = component.cantrip();
+
+                if (cantrip.applicationCategory().equals(CantripApplicationCategory.INSERTION)) {
+                    cantripComponent.set(1900, cantrip);
+                }
+
+                stack.set(FoxgloveDataComponents.BARK, BarkComponent.EMPTY); // resets bark
             }
         }
         return super.use(world, user, hand);
@@ -63,12 +70,21 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem {
 
             if (main.getItem() instanceof CharmedBarkItem) {
                 if (bark != null) {
-                    Spell spell = bark.spell();
+                    Cantrip cantrip = bark.cantrip();
 
                     if (context.getWorld().getBlockState(context.getBlockPos()).isIn(BlockTags.ANVIL)) {
                         if (main.contains(DataComponentTypes.CUSTOM_NAME)) {
                             if (player.isSneaking()) {
-                                main.set(FoxgloveDataComponents.BARK, new BarkComponent(new Spell(main.get(DataComponentTypes.CUSTOM_NAME).getString(), spell.getComponent())));
+
+                                main.set(
+                                        FoxgloveDataComponents.BARK,
+                                        new BarkComponent(new Cantrip(
+                                                main.get(DataComponentTypes.CUSTOM_NAME).getString(),
+                                                cantrip.effect(),
+                                                cantrip.applicationCategory()
+                                        ))
+                                );
+
                                 main.remove(DataComponentTypes.CUSTOM_NAME);
 
                                 if (context.getWorld().isClient()) {
@@ -85,7 +101,7 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem {
                         if (player.isSneaking()) {
                             if (bark.isEmpty()) {
                                 ItemStack appliedStack = new ItemStack(FoxgloveItems.CHARMED_BARK);
-                                Spell toApply = SpellUtils.createSpell();
+                                Cantrip toApply = MagicUtils.createCantrip();
 
                                 appliedStack.set(FoxgloveDataComponents.BARK, new BarkComponent(toApply));
 
@@ -127,14 +143,14 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem {
 
         if (component != null) {
             if (!component.isEmpty()) {
-                Spell heldSpell = component.spell();
-                SpellComponent spellComponent = heldSpell.getComponent();
+                Cantrip heldCantrip = component.cantrip();
+                CantripEffect cantripEffect = heldCantrip.effect();
 
-                tooltip.add(Text.literal(MiscUtils.formatString(heldSpell.getName())).withColor(0xFFb671d9));
-                tooltip.add(Text.literal("- ").formatted(Formatting.DARK_GRAY).append(Text.translatable(SpellUtils.getSpellCompId(spellComponent)).withColor(spellComponent.type().getColor())));
+                tooltip.add(Text.literal(MiscUtils.formatString(heldCantrip.name())).withColor(0xFFb671d9));
+                tooltip.add(Text.literal("- ").formatted(Formatting.DARK_GRAY).append(Text.translatable(MagicUtils.getCantripEffectTranslationKey(cantripEffect)).withColor(cantripEffect.type().getColor())));
 
                 if (Screen.hasAltDown()) {
-                    tooltip.add(Text.translatable(SpellUtils.getSpellCompId(spellComponent) + ".desc").formatted(Formatting.DARK_GRAY));
+                    tooltip.add(Text.translatable(MagicUtils.getCantripEffectTranslationKey(cantripEffect) + ".desc").formatted(Formatting.DARK_GRAY));
                 } else {
                     tooltip.add(Text.literal("Hold down").formatted(Formatting.DARK_GRAY).append(Text.literal(" [ALT] ").formatted(Formatting.YELLOW)).append(Text.literal("to see the effects")));
                 }
@@ -152,13 +168,13 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem {
         BarkComponent component = stack.get(FoxgloveDataComponents.BARK);
         if (component != null) {
             if (!component.isEmpty()) {
-                Spell spell = component.spell();
+                Cantrip cantrip = component.cantrip();
 
-                if (spell.getComponent().type() == SpellType.CHARM) {
+                if (cantrip.effect().type() == SpellCategory.CHARM) {
                     return Foxglove.id("charmed_bark_charm");
                 }
 
-                if (spell.getComponent().type() == SpellType.CURSE) {
+                if (cantrip.effect().type() == SpellCategory.CURSE) {
                     return Foxglove.id("charmed_bark_curse");
                 }
             } else {
@@ -175,5 +191,21 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem {
                 Foxglove.id("charmed_bark_charm"),
                 Foxglove.id("charmed_bark_curse")
         );
+    }
+
+    public Text getName(ItemStack stack) {
+        return super.getName(stack).copy().withColor(stack.getOrDefault(FoxgloveDataComponents.BARK, BarkComponent.EMPTY).cantrip().effect().type().getColor());
+    }
+
+    public int startColor(ItemStack itemStack) {
+        return 0xFF7b5f3d;
+    }
+
+    public int endColor(ItemStack itemStack) {
+        return itemStack.getOrDefault(FoxgloveDataComponents.BARK, BarkComponent.EMPTY).cantrip().effect().type().getColor();
+    }
+
+    public int backgroundColor(ItemStack itemStack) {
+        return 0xFF251a0c;
     }
 }

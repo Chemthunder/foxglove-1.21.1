@@ -4,7 +4,8 @@ import net.acoyt.acornlib.api.ALib;
 import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
-import net.chemthunder.foxglove.impl.index.FoxgloveSpellComponents;
+import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
+import net.chemthunder.foxglove.impl.index.magic.FoxgloveHexEffects;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -20,8 +21,11 @@ public class Foxglove implements ModInitializer {
         /* Initialization */
         FoxgloveItems.init();
         FoxgloveDataComponents.init();
-        FoxgloveSpellComponents.init();
         FoxgloveCriterions.init();
+
+        /* Magic */
+        FoxgloveCantripEffects.init();
+        FoxgloveHexEffects.init();
 
 		LOGGER.info("Hello Fabric world!");
 	}

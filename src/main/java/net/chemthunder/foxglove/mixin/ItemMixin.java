@@ -2,8 +2,9 @@ package net.chemthunder.foxglove.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.chemthunder.foxglove.impl.cca.entity.HeldSpellComponent;
-import net.chemthunder.foxglove.impl.index.FoxgloveSpellComponents;
+import net.chemthunder.foxglove.impl.cca.entity.CantripComponent;
+import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
+import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -20,9 +21,7 @@ public abstract class ItemMixin {
         Entity entity = item.getDefaultStack().getHolder();
 
         if (entity instanceof LivingEntity living) {
-            HeldSpellComponent spellComponent = HeldSpellComponent.KEY.get(living);
-
-            if (spellComponent.getHeldSpell().getComponent().equals(FoxgloveSpellComponents.DIZZY)) {
+            if (MagicUtils.getCantripComponent(living).effect().equals(FoxgloveCantripEffects.DIZZY)) {
                 return Text.translatable(item.getTranslationKey()).formatted(Formatting.OBFUSCATED);
             }
         }

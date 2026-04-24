@@ -10,6 +10,7 @@ import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementFrame;
 import net.minecraft.advancement.AdvancementRequirements;
 import net.minecraft.advancement.criterion.TickCriterion;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
@@ -31,42 +32,29 @@ public class FoxAdvancementGen extends FabricAdvancementProvider {
     }
 
     public void generateAdvancement(RegistryWrapper.WrapperLookup wrapperLookup, Consumer<AdvancementEntry> consumer) {
-        AdvancementEntry inscribe = Advancement.Builder.createUntelemetered()
-                .parent(Foxglove.id("obtain_bark"))
+        registerAdvancement(consumer, "inscribe", "inscribe", FoxgloveCriterions.INSCRIBE, Foxglove.id("obtain_bark"), FoxgloveItems.CHARMED_BARK);
+
+        registerAdvancement(consumer, "obtain_bark", "obtain_bark", FoxgloveCriterions.OBTAIN_BARK, Identifier.ofVanilla("husbandry/root"), Items.IRON_AXE);
+    }
+
+    private static void registerAdvancement(Consumer<AdvancementEntry> consumer, String name, String requirement, TickCriterion criterion, Identifier parent, Item icon) {
+        AdvancementEntry built = Advancement.Builder.createUntelemetered()
+                .parent(parent)
                 .display(
-                        FoxgloveItems.CHARMED_BARK,
-                        Text.translatable("advancements.foxglove.inscribe.title"),
-                        Text.translatable("advancements.foxglove.inscribe.description"),
+                        icon,
+                        Text.translatable("advancements.foxglove."  + name + ".title"),
+                        Text.translatable("advancements.foxglove." + name + ".description"),
                         null,
                         AdvancementFrame.TASK,
                         true,
                         true,
                         false
-                ).requirements(AdvancementRequirements.allOf(List.of("inscribe")))
+                ).requirements(AdvancementRequirements.allOf(List.of(requirement)))
                 .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
-                .criterion("inscribe", FoxgloveCriterions.INSCRIBE.create(new TickCriterion.Conditions(Optional.empty())))
-                .build(Foxglove.id("inscribe"));
+                .criterion(requirement, criterion.create(new TickCriterion.Conditions(Optional.empty())))
+                .build(Foxglove.id(name));
 
-        consumer.accept(inscribe);
-        entries.put(Foxglove.id("inscribe"), inscribe);
-
-        AdvancementEntry obtain_bark = Advancement.Builder.createUntelemetered()
-                .parent(Identifier.ofVanilla("husbandry/root"))
-                .display(
-                        Items.IRON_AXE,
-                        Text.translatable("advancements.foxglove.obtain_bark.title"),
-                        Text.translatable("advancements.foxglove.obtain_bark.description"),
-                        null,
-                        AdvancementFrame.TASK,
-                        true,
-                        true,
-                        false
-                ).requirements(AdvancementRequirements.allOf(List.of("obtain_bark")))
-                .criteriaMerger(AdvancementRequirements.CriterionMerger.AND)
-                .criterion("obtain_bark", FoxgloveCriterions.OBTAIN_BARK.create(new TickCriterion.Conditions(Optional.empty())))
-                .build(Foxglove.id("obtain_bark"));
-
-        consumer.accept(obtain_bark);
-        entries.put(Foxglove.id("obtain_bark"), obtain_bark);
+        consumer.accept(built);
+        entries.put(Foxglove.id(name), built);
     }
 }

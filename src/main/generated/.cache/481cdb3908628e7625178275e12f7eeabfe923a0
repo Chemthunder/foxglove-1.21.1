@@ -1,4 +1,7 @@
-// 1.21.1	2026-04-23T21:36:11.3074581	Foxglove/Model Definitions
+// 1.21.1	2026-04-24T17:18:13.3679085	Foxglove/Model Definitions
 9ef86ef4de583de70d051161384ccc7702b442e6 assets\foxglove\models\item\charmed_bark_charm.json
 3f345338be93afca074ee738ffeebc1c446d0687 assets\foxglove\models\item\charmed_bark.json
+98ef67c85cc00fb476667d793f88da157f6492ed assets\foxglove\models\item\twisted_branch.json
 98a4876b52ed6329a88e3bfb7385e90ae1071f3d assets\foxglove\models\item\charmed_bark_curse.json
+5b06f846f8215676eafdd8102c69a95270bfc1a2 assets\foxglove\models\item\twisted_branch_charm.json
+c0f1eabfe5f2d6630b6cc3bb0f9cdb29919b66a6 assets\foxglove\models\item\twisted_branch_curse.json

@@ -1,7 +1,7 @@
 package net.chemthunder.foxglove.impl.cca.entity;
 
 import net.acoyt.acornlib.api.util.MiscUtils;
-import net.chemthunder.foxglove.api.magic.spell.Spell;
+import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.impl.Foxglove;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,15 +14,15 @@ import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
-public class HeldSpellComponent implements AutoSyncedComponent, CommonTickingComponent {
-    public static final ComponentKey<HeldSpellComponent> KEY = MiscUtils.getOrCreateKey(Foxglove.id("held_spell"), HeldSpellComponent.class);
+public class CantripComponent implements AutoSyncedComponent, CommonTickingComponent {
+    public static final ComponentKey<CantripComponent> KEY = MiscUtils.getOrCreateKey(Foxglove.id("held_spell"), CantripComponent.class);
     private final LivingEntity player;
 
     private int duration = 0;
 
-    private Spell heldSpell = Spell.EMPTY;
+    private Cantrip heldCantrip = Cantrip.EMPTY;
 
-    public HeldSpellComponent(LivingEntity player) {
+    public CantripComponent(LivingEntity player) {
         this.player = player;
     }
 
@@ -35,14 +35,14 @@ public class HeldSpellComponent implements AutoSyncedComponent, CommonTickingCom
             this.duration--;
             this.tickDebug();
             if (this.getDuration() == 0) {
-                this.setHeldSpell(Spell.EMPTY);
+                this.setHeldCantrip(Cantrip.EMPTY);
             }
         }
     }
 
     private void tickDebug() {
         if (this.player instanceof PlayerEntity p) {
-            p.sendMessage(Text.literal(this.getDuration() + " " + this.getHeldSpell().getName() + " " + this.getHeldSpell().getComponent().name() + " " + this.getHeldSpell().getComponent().type().asString()), true);
+            p.sendMessage(Text.literal(this.getDuration() + " " + this.getHeldCantrip().name() + " " + this.getHeldCantrip().effect().name() + " " + this.getHeldCantrip().effect().type().asString()), true);
         }
     }
 
@@ -51,14 +51,14 @@ public class HeldSpellComponent implements AutoSyncedComponent, CommonTickingCom
         this.sync();
     }
 
-    public void setHeldSpell(Spell s) {
-        this.heldSpell = s;
+    public void setHeldCantrip(Cantrip s) {
+        this.heldCantrip = s;
         this.sync();
     }
 
-    public void set(int duration, Spell spell) {
+    public void set(int duration, Cantrip cantrip) {
         this.duration = duration;
-        this.heldSpell = spell;
+        this.heldCantrip = cantrip;
         this.sync();
     }
 
@@ -66,26 +66,26 @@ public class HeldSpellComponent implements AutoSyncedComponent, CommonTickingCom
         return this.duration;
     }
 
-    public Spell getHeldSpell() {
-        return this.heldSpell;
+    public Cantrip getHeldCantrip() {
+        return this.heldCantrip;
     }
 
     public void readFromNbt(NbtCompound nbtCompound, RegistryWrapper.WrapperLookup wrapperLookup) {
         this.duration = nbtCompound.getInt("Duration");
 
-        if (nbtCompound.contains("HeldSpell", NbtElement.COMPOUND_TYPE)) {
-            NbtCompound compound = nbtCompound.getCompound("HeldSpell");
-            this.heldSpell = Spell.CODEC.parse(wrapperLookup.getOps(NbtOps.INSTANCE), compound).resultOrPartial(Foxglove.LOGGER::error).orElseThrow();
+        if (nbtCompound.contains("HeldCantrip", NbtElement.COMPOUND_TYPE)) {
+            NbtCompound compound = nbtCompound.getCompound("HeldCantrip");
+            this.heldCantrip = Cantrip.CODEC.parse(wrapperLookup.getOps(NbtOps.INSTANCE), compound).resultOrPartial(Foxglove.LOGGER::error).orElseThrow();
         } else {
-            this.heldSpell = Spell.EMPTY;
+            this.heldCantrip = Cantrip.EMPTY;
         }
     }
 
     public void writeToNbt(NbtCompound nbtCompound, RegistryWrapper.WrapperLookup wrapperLookup) {
         nbtCompound.putInt("Duration", duration);
 
-        if (this.heldSpell != Spell.EMPTY) {
-            nbtCompound.put("HeldSpell", Spell.CODEC.encodeStart(wrapperLookup.getOps(NbtOps.INSTANCE), this.heldSpell).getOrThrow());
+        if (this.heldCantrip != Cantrip.EMPTY) {
+            nbtCompound.put("HeldCantrip", Cantrip.CODEC.encodeStart(wrapperLookup.getOps(NbtOps.INSTANCE), this.heldCantrip).getOrThrow());
         }
     }
 }

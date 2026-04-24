@@ -2,8 +2,9 @@ package net.chemthunder.foxglove.api.magic.ward;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.chemthunder.foxglove.api.magic.Magic;
 
-public record Ward(String name, int duration, int size) {
+public record Ward(String name, int duration, int size) implements Magic {
     public static final Ward EMPTY = new Ward("empty", 0, 0);
 
     public static final Codec<Ward> CODEC = RecordCodecBuilder.create(instance -> instance.group(

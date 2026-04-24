@@ -16,8 +16,12 @@ public class FoxModelGen extends FabricModelProvider {
 
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
         itemModelGenerator.register(FoxgloveItems.CHARMED_BARK, Models.GENERATED);
+        itemModelGenerator.register(FoxgloveItems.TWISTED_BRANCH, Models.HANDHELD);
 
         itemModelGenerator.register(FoxgloveItems.CHARMED_BARK, "_charm", Models.GENERATED);
         itemModelGenerator.register(FoxgloveItems.CHARMED_BARK, "_curse", Models.GENERATED);
+
+        itemModelGenerator.register(FoxgloveItems.TWISTED_BRANCH, "_charm", Models.HANDHELD);
+        itemModelGenerator.register(FoxgloveItems.TWISTED_BRANCH, "_curse", Models.HANDHELD);
     }
 }
