@@ -1,8 +1,5 @@
 package net.chemthunder.foxglove.impl.index;
 
-import net.acoyt.acornlib.data.provider.AcornAdvancementGen;
-import net.acoyt.acornlib.impl.AcornLib;
-import net.acoyt.acornlib.impl.index.AcornCriterions;
 import net.chemthunder.foxglove.impl.Foxglove;
 import net.minecraft.advancement.criterion.Criterion;
 import net.minecraft.advancement.criterion.TickCriterion;

@@ -1,7 +1,5 @@
 package net.chemthunder.foxglove.data.provider;
 
-import net.acoyt.acornlib.impl.AcornLib;
-import net.acoyt.acornlib.impl.index.AcornCriterions;
 import net.chemthunder.foxglove.impl.Foxglove;
 import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;

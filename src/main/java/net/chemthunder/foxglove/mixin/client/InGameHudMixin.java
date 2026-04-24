@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.chemthunder.foxglove.impl.cca.entity.HeldSpellComponent;
 import net.chemthunder.foxglove.impl.index.FoxgloveSpellComponents;
-import net.chemthunder.foxglove.mixin.PlayerEntityMixin;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;

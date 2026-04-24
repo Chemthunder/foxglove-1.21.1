@@ -1,6 +1,5 @@
 package net.chemthunder.foxglove.data.provider.resources;
 
-import net.acoyt.acornlib.api.util.DataUtils;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
 import net.chemthunder.foxglove.impl.index.FoxgloveSpellComponents;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
