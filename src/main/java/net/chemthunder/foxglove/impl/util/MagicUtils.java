@@ -3,7 +3,7 @@ package net.chemthunder.foxglove.impl.util;
 import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripApplicationCategory;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
-import net.chemthunder.foxglove.impl.cca.entity.CantripComponent;
+import net.chemthunder.foxglove.impl.cca.entity.MagicComponent;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.minecraft.entity.LivingEntity;
 
@@ -40,16 +40,30 @@ public class MagicUtils {
     }
 
     public static Cantrip getCantripComponent(LivingEntity entity) {
-        return CantripComponent.KEY.get(entity).getHeldCantrip();
+        return MagicComponent.KEY.get(entity).getHeldCantrip();
+    }
+
+    public static CantripApplicationCategory getRandomCategory() {
+        Random random = new Random();
+
+        CantripApplicationCategory category = CantripApplicationCategory.values()[random.nextInt(CantripApplicationCategory.values().length)];
+
+        if (category != CantripApplicationCategory.NONE) {
+            return category;
+        } else {
+            return getRandomCategory();
+        }
     }
 
     public static Cantrip createCantrip() {
         Random random = new Random();
+
+
         
         return new Cantrip(
                 generateName(),
                 FoxgloveCantripEffects.COMPS.get(random.nextInt(FoxgloveCantripEffects.COMPS.size())),
-                CantripApplicationCategory.values()[random.nextInt(CantripApplicationCategory.values().length)]
+                getRandomCategory()
         );
     }
 

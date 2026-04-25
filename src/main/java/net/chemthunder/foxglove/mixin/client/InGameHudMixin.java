@@ -2,7 +2,6 @@ package net.chemthunder.foxglove.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.chemthunder.foxglove.impl.cca.entity.CantripComponent;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.client.MinecraftClient;

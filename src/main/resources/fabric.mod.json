@@ -3,9 +3,13 @@
   "id": "foxglove",
   "version": "${version}",
   "name": "Foxglove",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "\"The forest's call beckons those who lay in wait.\"",
   "authors": [
-    "Me!"
+    "Chemthunder"
+  ],
+  "contributors": [
+    "AcoYT",
+    "Eyalego"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",

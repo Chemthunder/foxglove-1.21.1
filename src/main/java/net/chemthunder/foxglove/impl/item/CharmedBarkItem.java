@@ -8,7 +8,7 @@ import net.chemthunder.foxglove.api.magic.cantrip.CantripApplicationCategory;
 import net.chemthunder.foxglove.api.magic.common.SpellCategory;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
 import net.chemthunder.foxglove.impl.Foxglove;
-import net.chemthunder.foxglove.impl.cca.entity.CantripComponent;
+import net.chemthunder.foxglove.impl.cca.entity.MagicComponent;
 import net.chemthunder.foxglove.impl.component.BarkComponent;
 import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
@@ -44,7 +44,7 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         BarkComponent component = stack.get(FoxgloveDataComponents.BARK);
-        CantripComponent cantripComponent = CantripComponent.KEY.get(user);
+        MagicComponent magicComponent = MagicComponent.KEY.get(user);
 
         if (component != null) {
             if (!component.isEmpty()) {
@@ -52,7 +52,7 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                 Cantrip cantrip = component.cantrip();
 
                 if (cantrip.applicationCategory().equals(CantripApplicationCategory.INSERTION)) {
-                    cantripComponent.set(1900, cantrip);
+                    magicComponent.set(1900, cantrip);
                 }
 
                 stack.set(FoxgloveDataComponents.BARK, BarkComponent.EMPTY); // resets bark
@@ -146,13 +146,45 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                 Cantrip heldCantrip = component.cantrip();
                 CantripEffect cantripEffect = heldCantrip.effect();
 
-                tooltip.add(Text.literal(MiscUtils.formatString(heldCantrip.name())).withColor(0xFFb671d9));
-                tooltip.add(Text.literal("- ").formatted(Formatting.DARK_GRAY).append(Text.translatable(MagicUtils.getCantripEffectTranslationKey(cantripEffect)).withColor(cantripEffect.type().getColor())));
+                tooltip.add(
+                        Text.literal(
+                                MiscUtils.formatString(heldCantrip.name())
+                        ).withColor(0xFFb671d9)
+                );
+
+                tooltip.add(
+                        Text.literal("- ")
+                                .append(
+                                        Text.literal(
+                                                MiscUtils.formatString(heldCantrip.applicationCategory().name())
+                                        ).withColor(cantripEffect.type().getColor())
+                                )
+                );
+
+                tooltip.add(
+                        Text.literal("- ").formatted(Formatting.DARK_GRAY)
+                                .append(
+                                        Text.translatable(
+                                                MagicUtils.getCantripEffectTranslationKey(cantripEffect)
+                                        ).withColor(cantripEffect.type().getColor()
+                                        )
+                                )
+                );
 
                 if (Screen.hasAltDown()) {
-                    tooltip.add(Text.translatable(MagicUtils.getCantripEffectTranslationKey(cantripEffect) + ".desc").formatted(Formatting.DARK_GRAY));
+                    tooltip.add(
+                            Text.translatable(
+                                    MagicUtils.getCantripEffectTranslationKey(cantripEffect) + ".desc")
+                                    .formatted(Formatting.DARK_GRAY)
+                    );
                 } else {
-                    tooltip.add(Text.literal("Hold down").formatted(Formatting.DARK_GRAY).append(Text.literal(" [ALT] ").formatted(Formatting.YELLOW)).append(Text.literal("to see the effects")));
+                    tooltip.add(
+                            Text.literal("Hold down").formatted(Formatting.DARK_GRAY)
+                                    .append(
+                                            Text.literal(" [ALT] ").formatted(Formatting.YELLOW))
+                                    .append(Text.literal("to see the effects")
+                                    )
+                    );
                 }
             }
         }

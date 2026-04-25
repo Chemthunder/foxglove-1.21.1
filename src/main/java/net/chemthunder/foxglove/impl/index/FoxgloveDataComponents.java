@@ -3,6 +3,7 @@ package net.chemthunder.foxglove.impl.index;
 import net.acoyt.acornlib.api.registrants.ComponentTypeRegistrant;
 import net.chemthunder.foxglove.impl.Foxglove;
 import net.chemthunder.foxglove.impl.component.BarkComponent;
+import net.chemthunder.foxglove.impl.component.BranchComponent;
 import net.minecraft.component.ComponentType;
 
 public interface FoxgloveDataComponents {
@@ -12,6 +13,12 @@ public interface FoxgloveDataComponents {
             builder -> builder
                     .codec(BarkComponent.CODEC)
                     .packetCodec(BarkComponent.PACKET_CODEC)
+    );
+
+    ComponentType<BranchComponent> BRANCH = DATA_COMPONENTS.register("branch",
+            builder -> builder
+                    .codec(BranchComponent.CODEC)
+                    .packetCodec(BranchComponent.PACKET_CODEC)
     );
 
     static void init() {}

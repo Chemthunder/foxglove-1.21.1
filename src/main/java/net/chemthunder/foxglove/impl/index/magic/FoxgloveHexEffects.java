@@ -13,7 +13,7 @@ import java.util.function.Function;
 public interface FoxgloveHexEffects {
     List<HexEffect> COMPS = new ArrayList<>();
 
-    HexEffect TEST = register("test", EnsnareHexEffect::new);
+    HexEffect ENSNARE = register("ensnare", EnsnareHexEffect::new);
 
     private static HexEffect register(String name, Function<String, HexEffect> factory) {
         HexEffect component = factory.apply(name);
