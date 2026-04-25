@@ -3,8 +3,10 @@ package net.chemthunder.foxglove.impl.util;
 import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripApplicationCategory;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
+import net.chemthunder.foxglove.api.magic.hex.Hex;
 import net.chemthunder.foxglove.impl.cca.entity.MagicComponent;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
+import net.chemthunder.foxglove.impl.index.magic.FoxgloveHexEffects;
 import net.minecraft.entity.LivingEntity;
 
 import java.util.Arrays;
@@ -58,12 +60,20 @@ public class MagicUtils {
     public static Cantrip createCantrip() {
         Random random = new Random();
 
-
-        
         return new Cantrip(
                 generateName(),
                 FoxgloveCantripEffects.COMPS.get(random.nextInt(FoxgloveCantripEffects.COMPS.size())),
                 getRandomCategory()
+        );
+    }
+
+    public static Hex createHex() {
+        Random random = new Random();
+
+        return new Hex(
+                generateName(),
+                3,
+                FoxgloveHexEffects.COMPS.get(random.nextInt(FoxgloveHexEffects.COMPS.size()))
         );
     }
 

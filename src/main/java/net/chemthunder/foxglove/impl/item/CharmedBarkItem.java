@@ -5,7 +5,6 @@ import net.acoyt.acornlib.api.item.ModelVaryingItem;
 import net.acoyt.acornlib.api.util.MiscUtils;
 import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripApplicationCategory;
-import net.chemthunder.foxglove.api.magic.common.SpellCategory;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
 import net.chemthunder.foxglove.impl.Foxglove;
 import net.chemthunder.foxglove.impl.cca.entity.MagicComponent;
@@ -198,20 +197,9 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
 
     public Identifier getModel(ModelTransformationMode renderMode, ItemStack stack, @Nullable LivingEntity entity) {
         BarkComponent component = stack.get(FoxgloveDataComponents.BARK);
+
         if (component != null) {
-            if (!component.isEmpty()) {
-                Cantrip cantrip = component.cantrip();
-
-                if (cantrip.effect().type() == SpellCategory.CHARM) {
-                    return Foxglove.id("charmed_bark_charm");
-                }
-
-                if (cantrip.effect().type() == SpellCategory.CURSE) {
-                    return Foxglove.id("charmed_bark_curse");
-                }
-            } else {
-                return Foxglove.id("charmed_bark");
-            }
+            return Foxglove.id( component.isEmpty() ? "charmed_bark" : "charmed_bark_" + component.cantrip().effect().type().asString().toLowerCase());
         }
 
         return null;

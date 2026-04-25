@@ -3,7 +3,6 @@ package net.chemthunder.foxglove.impl.component;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.api.magic.hex.Hex;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
