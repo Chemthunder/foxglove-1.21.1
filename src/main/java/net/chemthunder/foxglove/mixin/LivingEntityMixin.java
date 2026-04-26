@@ -13,7 +13,7 @@ public abstract class LivingEntityMixin {
     @WrapMethod(method = "getMovementSpeed()F")
     private float foxglove$weighted(Operation<Float> original) {
         LivingEntity living = (LivingEntity) (Object) this;
-        if (MagicUtils.getCantripComponent(living).effect().equals(FoxgloveCantripEffects.WEIGHTED)) {
+        if (MagicUtils.getCantripComponent(living).effect() == FoxgloveCantripEffects.WEIGHTED) {
             return original.call() - living.getArmor();
         }
 

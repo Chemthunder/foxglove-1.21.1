@@ -16,6 +16,7 @@
     "requireAnnotations": true
   },
   "client": [
-    "client.InGameHudMixin"
+    "client.InGameHudMixin",
+    "client.MinecraftClientMixin"
   ]
 }

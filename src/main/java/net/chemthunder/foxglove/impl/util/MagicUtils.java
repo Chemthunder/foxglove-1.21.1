@@ -4,7 +4,9 @@ import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripApplicationCategory;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
 import net.chemthunder.foxglove.api.magic.hex.Hex;
-import net.chemthunder.foxglove.impl.cca.entity.MagicComponent;
+import net.chemthunder.foxglove.api.magic.hex.HexEffect;
+import net.chemthunder.foxglove.impl.cca.entity.CantripComponent;
+import net.chemthunder.foxglove.impl.cca.entity.HexComponent;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveHexEffects;
 import net.minecraft.entity.LivingEntity;
@@ -15,13 +17,13 @@ import java.util.Random;
 
 public class MagicUtils {
     public static final List<String> prefixes = Arrays.asList(
-        "hydro",
-        "aero",
-        "geo",
-        "pyro",
-        "cleo",
-        "regal",
-        "xeno"
+            "hydro",
+            "aero",
+            "geo",
+            "pyro",
+            "cleo",
+            "regal",
+            "xeno"
     );
 
     public static final List<String> suffixes = Arrays.asList(
@@ -42,7 +44,11 @@ public class MagicUtils {
     }
 
     public static Cantrip getCantripComponent(LivingEntity entity) {
-        return MagicComponent.KEY.get(entity).getHeldCantrip();
+        return CantripComponent.KEY.get(entity).getHeldCantrip();
+    }
+
+    public static Hex getHexComponent(LivingEntity entity) {
+        return HexComponent.KEY.get(entity).getHeldHex();
     }
 
     public static CantripApplicationCategory getRandomCategory() {
@@ -58,26 +64,25 @@ public class MagicUtils {
     }
 
     public static Cantrip createCantrip() {
-        Random random = new Random();
-
         return new Cantrip(
                 generateName(),
-                FoxgloveCantripEffects.COMPS.get(random.nextInt(FoxgloveCantripEffects.COMPS.size())),
+                FoxgloveCantripEffects.COMPS.get(new Random().nextInt(FoxgloveCantripEffects.COMPS.size())),
                 getRandomCategory()
         );
     }
 
     public static Hex createHex() {
-        Random random = new Random();
-
         return new Hex(
                 generateName(),
-                3,
-                FoxgloveHexEffects.COMPS.get(random.nextInt(FoxgloveHexEffects.COMPS.size()))
+                FoxgloveHexEffects.COMPS.get(new Random().nextInt(FoxgloveHexEffects.COMPS.size()))
         );
     }
 
-    public static String getCantripEffectTranslationKey(CantripEffect spellComponent) {
-        return "cantrip_effect.foxglove." + spellComponent.name().toLowerCase();
+    public static String getCantripEffectTranslationKey(CantripEffect cantripEffect) {
+        return "cantrip_effect.foxglove." + cantripEffect.name().toLowerCase();
+    }
+
+    public static String getHexEffectTranslationKey(HexEffect hexEffect) {
+        return "hex_effect.foxglove." + hexEffect.getName().toLowerCase();
     }
 }

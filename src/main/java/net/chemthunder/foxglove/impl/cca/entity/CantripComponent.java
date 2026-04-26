@@ -14,15 +14,15 @@ import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
 
-public class MagicComponent implements AutoSyncedComponent, CommonTickingComponent {
-    public static final ComponentKey<MagicComponent> KEY = MiscUtils.getOrCreateKey(Foxglove.id("held_spell"), MagicComponent.class);
+public class CantripComponent implements AutoSyncedComponent, CommonTickingComponent {
+    public static final ComponentKey<CantripComponent> KEY = MiscUtils.getOrCreateKey(Foxglove.id("cantrip"), CantripComponent.class);
     private final LivingEntity player;
 
     private int duration = 0;
 
     private Cantrip heldCantrip = Cantrip.EMPTY;
 
-    public MagicComponent(LivingEntity player) {
+    public CantripComponent(LivingEntity player) {
         this.player = player;
     }
 

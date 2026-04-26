@@ -2,10 +2,8 @@ package net.chemthunder.foxglove.api.magic.hex;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
-import net.chemthunder.foxglove.api.magic.cantrip.CantripApplicationCategory;
-import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
 import net.chemthunder.foxglove.api.magic.common.SpellCategory;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -27,6 +25,7 @@ public class HexEffect {
     }
 
     public void getUseAbility(PlayerEntity caster, World world, ItemStack stack) {}
+    public void getHitAbility(PlayerEntity caster, World world, ItemStack stack, LivingEntity target) {}
 
     public String getName() {
         return this.name;

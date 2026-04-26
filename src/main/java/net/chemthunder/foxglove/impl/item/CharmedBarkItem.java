@@ -7,11 +7,12 @@ import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripApplicationCategory;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
 import net.chemthunder.foxglove.impl.Foxglove;
-import net.chemthunder.foxglove.impl.cca.entity.MagicComponent;
+import net.chemthunder.foxglove.impl.cca.entity.CantripComponent;
 import net.chemthunder.foxglove.impl.component.BarkComponent;
 import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
+import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.screen.Screen;
@@ -43,18 +44,19 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         BarkComponent component = stack.get(FoxgloveDataComponents.BARK);
-        MagicComponent magicComponent = MagicComponent.KEY.get(user);
+        CantripComponent magicComponent = CantripComponent.KEY.get(user);
 
         if (component != null) {
             if (!component.isEmpty()) {
-
                 Cantrip cantrip = component.cantrip();
 
-                if (cantrip.applicationCategory().equals(CantripApplicationCategory.INSERTION)) {
-                    magicComponent.set(1900, cantrip);
-                }
+                if (cantrip.applicationCategory() != CantripApplicationCategory.TARGETED) {
+                    if (cantrip.applicationCategory().equals(CantripApplicationCategory.INSERTION)) {
+                        magicComponent.set(1900, cantrip);
+                    }
 
-                stack.set(FoxgloveDataComponents.BARK, BarkComponent.EMPTY); // resets bark
+                    stack.set(FoxgloveDataComponents.BARK, BarkComponent.EMPTY);
+                }
             }
         }
         return super.use(world, user, hand);
@@ -115,6 +117,10 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                                     player.swingHand(player.getActiveHand());
                                     player.playSoundToPlayer(SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.BLOCKS, 1, 1);
                                 }
+
+                                if (!player.getItemCooldownManager().isCoolingDown(this) && !player.isCreative()) {
+                                    player.getItemCooldownManager().set(this, 10);
+                                }
                             }
 
                             return ActionResult.FAIL;
@@ -128,6 +134,19 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                             if (context.getWorld().isClient()) {
                                 player.swingHand(player.getActiveHand());
                                 player.playSoundToPlayer(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1, 1);
+                            }
+                        }
+                    }
+
+                    if (context.getWorld().getBlockState(context.getBlockPos()).isOf(Blocks.SPONGE)) {
+                        if (!bark.isEmpty()) {
+
+                            CantripComponent magicComponent = CantripComponent.KEY.get(player);
+                            magicComponent.set(200, new Cantrip("im a gummy bear", FoxgloveCantripEffects.TRANSPARENT, CantripApplicationCategory.INSERTION));
+
+                            if (context.getWorld().isClient()) {
+                                player.swingHand(player.getActiveHand());
+                                player.playSoundToPlayer(SoundEvents.ITEM_TRIDENT_RETURN, SoundCategory.BLOCKS, 1, 1);
                             }
                         }
                     }
@@ -152,7 +171,7 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                 );
 
                 tooltip.add(
-                        Text.literal("- ")
+                        Text.literal("- ").formatted(Formatting.DARK_GRAY)
                                 .append(
                                         Text.literal(
                                                 MiscUtils.formatString(heldCantrip.applicationCategory().name())

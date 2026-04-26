@@ -27,3 +27,5 @@ public abstract class ItemMixin {
         return original.call(stack);
     }
 }
+
+// TODO: Make it so the text scrambling actually works!!!

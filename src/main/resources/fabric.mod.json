@@ -44,7 +44,8 @@
 
   "custom": {
     "cardinal-components": [
-      "foxglove:held_spell"
+      "foxglove:cantrip",
+      "foxglove:hex"
     ]
   }
 }

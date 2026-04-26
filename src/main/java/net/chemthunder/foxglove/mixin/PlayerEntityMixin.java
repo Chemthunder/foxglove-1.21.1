@@ -6,3 +6,4 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
 }
+// TODO: FIX BLIGHT SO IT ACTUALLY WORKS !!!!
