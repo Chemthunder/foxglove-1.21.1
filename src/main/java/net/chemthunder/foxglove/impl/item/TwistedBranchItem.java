@@ -44,12 +44,7 @@ public class TwistedBranchItem extends Item implements ModelVaryingItem {
                     user.swingHand(hand);
                 }
             } else {
-                Hex currentHex = component.hex();
-
-                //
-                currentHex.effect().getUseAbility(user, world, stack);
-
-                useHex(stack);
+                useHex(stack, user);
             }
         }
         return super.use(world, user, hand);
@@ -73,6 +68,15 @@ public class TwistedBranchItem extends Item implements ModelVaryingItem {
         BranchComponent pre = stack.getOrDefault(FoxgloveDataComponents.BRANCH, BranchComponent.EMPTY);
 
         stack.set(FoxgloveDataComponents.BRANCH, new BranchComponent(pre.hex(), pre.uses() - 1));
+    }
+
+    private static void useHex(ItemStack stack, PlayerEntity player) {
+        BranchComponent pre = stack.getOrDefault(FoxgloveDataComponents.BRANCH, BranchComponent.EMPTY);
+
+        stack.set(FoxgloveDataComponents.BRANCH, new BranchComponent(pre.hex(), pre.uses() - 1));
+        pre.hex().effect().getUseAbility(player, player.getWorld(), stack);
+
+        Foxglove.LOGGER.info("Successfully used hex: {}", pre.hex().name());
     }
 
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
