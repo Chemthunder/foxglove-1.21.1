@@ -43,7 +43,7 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
         BarkComponent component = stack.get(FoxgloveDataComponents.BARK);
-        CantripComponent magicComponent = CantripComponent.KEY.get(user);
+        CantripComponent cantripComponent = CantripComponent.KEY.get(user);
 
         if (component != null) {
             if (!component.isEmpty()) {
@@ -51,7 +51,7 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
 
                 if (cantrip.applicationCategory() != CantripApplicationCategory.TARGETED) {
                     if (cantrip.applicationCategory().equals(CantripApplicationCategory.INSERTION)) {
-                        magicComponent.set(1900, cantrip, "Self");
+                        cantripComponent.set(1900, cantrip, "Self");
                     }
 
                     stack.set(FoxgloveDataComponents.BARK, BarkComponent.EMPTY);
@@ -199,7 +199,7 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                 if (Screen.hasAltDown()) {
                     tooltip.add(
                             Text.translatable(
-                                    MagicUtils.getCantripEffectTranslationKey(cantripEffect) + ".desc")
+                                            MagicUtils.getCantripEffectTranslationKey(cantripEffect) + ".desc")
                                     .formatted(Formatting.DARK_GRAY)
                     );
                 } else {
@@ -225,9 +225,8 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
         BarkComponent component = stack.get(FoxgloveDataComponents.BARK);
 
         if (component != null) {
-            return Foxglove.id( component.isEmpty() ? "charmed_bark" : "charmed_bark_" + component.cantrip().effect().type().asString().toLowerCase());
+            return Foxglove.id(component.isEmpty() ? "charmed_bark" : "charmed_bark_" + component.cantrip().effect().type().asString().toLowerCase());
         }
-
         return null;
     }
 

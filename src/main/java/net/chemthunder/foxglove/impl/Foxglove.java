@@ -3,6 +3,7 @@ package net.chemthunder.foxglove.impl;
 import net.acoyt.acornlib.api.ALib;
 import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
+import net.chemthunder.foxglove.impl.index.FoxgloveEntities;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveHexEffects;
@@ -22,6 +23,7 @@ public class Foxglove implements ModInitializer {
         FoxgloveItems.init();
         FoxgloveDataComponents.init();
         FoxgloveCriterions.init();
+        FoxgloveEntities.init();
 
         /* Magic */
         FoxgloveCantripEffects.init();

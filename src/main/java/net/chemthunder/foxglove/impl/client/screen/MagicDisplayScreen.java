@@ -8,6 +8,7 @@ import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -48,6 +49,28 @@ public class MagicDisplayScreen extends Screen {
                         0xffffff
                 );
 
+                context.drawHorizontalLine(
+                        0,
+                        context.getScaledWindowWidth(),
+                        25,
+                        0xFFffffff
+                );
+
+                context.drawTooltip(
+                        this.textRenderer,
+                        Text.literal("Current Duration").formatted(Formatting.DARK_GRAY),
+                        baseX + 10,
+                        baseY + 55 + (MagicUtils.getCantripEffectTranslationKey(cantrip.effect()) + ".desc").length() / 2
+                );
+
+                context.drawTooltip(
+                        this.textRenderer,
+                        Text.literal(StringHelper.formatTicks(cantripComponent.getDuration(), client.world.getTickManager().getTickRate())).formatted(Formatting.YELLOW),
+                        baseX + 110,
+                        baseY + 55 + (MagicUtils.getCantripEffectTranslationKey(cantrip.effect()) + ".desc").length() / 2
+                );
+
+                int whyDoINeedThis = baseX + 70 + cantrip.name().length();
                 if (!cantrip.isEmpty()) {
                     context.drawTooltip(
                             this.textRenderer,
@@ -73,64 +96,36 @@ public class MagicDisplayScreen extends Screen {
                     context.drawTooltip(
                             this.textRenderer,
                             Text.literal("Inflicted by " + cantripComponent.getLastInflictor()).withColor(cantrip.effect().type().getColor()),
-                            baseX + 70 + cantrip.name().length(),
+                            whyDoINeedThis,
                             baseY + 15
-                    );
-
-                    context.drawTooltip(
-                            this.textRenderer,
-                            Text.literal("Current Duration").formatted(Formatting.DARK_GRAY),
-                            baseX + 10,
-                            baseY + 55
-                    );
-
-                    context.drawTooltip(
-                            this.textRenderer,
-                            Text.literal(StringHelper.formatTicks(cantripComponent.getDuration(), client.world.getTickManager().getTickRate())).formatted(Formatting.YELLOW),
-                            baseX + 110,
-                            baseY + 55
                     );
                 } else {
                     context.drawTooltip(
                             this.textRenderer,
-                            Text.literal("None").withColor(cantrip.effect().type().getColor()),
+                            Text.translatable("foxglove.magic_display.empty.name").withColor(cantrip.effect().type().getColor()),
                             baseX + 10,
                             baseY + 15
                     );
 
                     context.drawTooltip(
                             this.textRenderer,
-                            Text.literal("No Effects").withColor(cantrip.effect().type().getColor()),
+                            Text.translatable("foxglove.magic_display.empty.effect_name").withColor(cantrip.effect().type().getColor()),
                             baseX + 180,
                             baseY + 15
                     );
 
                     context.drawTooltip(
                             this.textRenderer,
-                            Text.literal("Have a Cantrip inflicted on you to see its effects!").formatted(Formatting.DARK_GRAY),
+                            Text.translatable("foxglove.magic_display.empty.effects").formatted(Formatting.DARK_GRAY),
                             baseX + 10,
                             baseY + 35
                     );
 
                     context.drawTooltip(
                             this.textRenderer,
-                            Text.literal("Inflicted by " + cantripComponent.getLastInflictor()).withColor(cantrip.effect().type().getColor()),
-                            baseX + 70 + cantrip.name().length(),
+                            Text.translatable("foxglove.magic_display.empty.inflictor").withColor(cantrip.effect().type().getColor()),
+                            whyDoINeedThis,
                             baseY + 15
-                    );
-
-                    context.drawTooltip(
-                            this.textRenderer,
-                            Text.literal("Current Duration").formatted(Formatting.DARK_GRAY),
-                            baseX + 10,
-                            baseY + 55
-                    );
-
-                    context.drawTooltip(
-                            this.textRenderer,
-                            Text.literal(StringHelper.formatTicks(cantripComponent.getDuration(), client.world.getTickManager().getTickRate())).formatted(Formatting.YELLOW),
-                            baseX + 110,
-                            baseY + 55
                     );
                 }
             }
@@ -140,6 +135,11 @@ public class MagicDisplayScreen extends Screen {
 
     public boolean shouldPause() {
         return false;
+    }
+
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderDarkening(context);
+        super.renderBackground(context, mouseX, mouseY, delta);
     }
 
     public void blur() {}

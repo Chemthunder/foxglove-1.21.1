@@ -10,7 +10,10 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Box;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -47,9 +50,9 @@ public class CantripComponent implements AutoSyncedComponent, CommonTickingCompo
     }
 
     private void tickDebug() {
-        if (this.player instanceof PlayerEntity p) {
-            p.sendMessage(Text.literal(this.getDuration() + " " + this.getHeldCantrip().name() + " " + this.getHeldCantrip().effect().name() + " " + this.getHeldCantrip().effect().type().asString()), true);
-        }
+//        if (this.player instanceof PlayerEntity p) {
+//            p.sendMessage(Text.literal(this.getDuration() + " " + this.getHeldCantrip().name() + " " + this.getHeldCantrip().effect().name() + " " + this.getHeldCantrip().effect().type().asString()), true);
+//        }
     }
 
     private void tickEffects() {
@@ -74,6 +77,11 @@ public class CantripComponent implements AutoSyncedComponent, CommonTickingCompo
         this.duration = duration;
         this.heldCantrip = cantrip;
         this.lastInflictor = lastInflictor;
+
+        if (this.player instanceof PlayerEntity playerEntity) {
+            playerEntity.sendMessage(Text.literal("You have been inflicted with a " + cantrip.effect().type().asString() + "!").withColor(cantrip.effect().type().getColor()).formatted(Formatting.ITALIC), true);
+            playerEntity.playSoundToPlayer(SoundEvents.BLOCK_NOTE_BLOCK_CHIME.value(), SoundCategory.PLAYERS, 1, 1);
+        }
         this.sync();
     }
 
