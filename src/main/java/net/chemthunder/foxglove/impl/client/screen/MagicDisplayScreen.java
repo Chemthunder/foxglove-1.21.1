@@ -8,7 +8,6 @@ import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
