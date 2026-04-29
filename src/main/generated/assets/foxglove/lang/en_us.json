@@ -23,8 +23,10 @@
   "cantrip_effect.foxglove.transparent.desc": "The target will become slightly transparent for the duration of the cantrip.",
   "cantrip_effect.foxglove.weighted": "Weighted",
   "cantrip_effect.foxglove.weighted.desc": "The target's speed will be decreased, this modifier will increase based on the armor protection value.",
+  "category.foxglove": "Foxglove",
   "hex_effect.foxglove.ensnare": "Ensnare",
+  "hex_effect.foxglove.mockery": "Mockery",
   "hex_effect.foxglove.soulflow": "Soulflow",
   "item.foxglove.charmed_bark": "Charmed Bark",
-  "item.foxglove.twisted_branch": "Twisted Branch"
+  "key.foxglove.open_magic_display_screen": "Open Magic Display Screen"
 }
