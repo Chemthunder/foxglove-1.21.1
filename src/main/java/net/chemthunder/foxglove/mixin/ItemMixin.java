@@ -11,13 +11,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.Inject;
 
 @Mixin(Item.class)
 public abstract class ItemMixin {
     @WrapMethod(method = "getName(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/text/Text;")
     private Text foxglove$dizzy(ItemStack stack, Operation<Text> original) {
         Item item = (Item) (Object) this;
-        Entity entity = item.getDefaultStack().getHolder();
+        Entity entity = stack.getHolder();
 
         if (entity instanceof LivingEntity living) {
             if (MagicUtils.getCantripComponent(living).effect().equals(FoxgloveCantripEffects.DIZZY)) {
@@ -27,5 +28,3 @@ public abstract class ItemMixin {
         return original.call(stack);
     }
 }
-
-// TODO: Make it so the text scrambling actually works!!!

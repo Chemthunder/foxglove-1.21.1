@@ -12,4 +12,8 @@ public record Cantrip(String name, CantripEffect effect, CantripApplicationCateg
             CantripEffect.CODEC.optionalFieldOf("effect", CantripEffect.EMPTY).forGetter(Cantrip::effect),
             CantripApplicationCategory.CODEC.optionalFieldOf("applicationCategory", CantripApplicationCategory.NONE).forGetter(Cantrip::applicationCategory)
     ).apply(instance, Cantrip::new));
+
+    public boolean isEmpty() {
+        return this == EMPTY;
+    }
 }

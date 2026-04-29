@@ -12,7 +12,6 @@ import net.chemthunder.foxglove.impl.component.BarkComponent;
 import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.screen.Screen;
@@ -52,7 +51,7 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
 
                 if (cantrip.applicationCategory() != CantripApplicationCategory.TARGETED) {
                     if (cantrip.applicationCategory().equals(CantripApplicationCategory.INSERTION)) {
-                        magicComponent.set(1900, cantrip);
+                        magicComponent.set(1900, cantrip, "Self");
                     }
 
                     stack.set(FoxgloveDataComponents.BARK, BarkComponent.EMPTY);
@@ -121,6 +120,27 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                                 if (!player.getItemCooldownManager().isCoolingDown(this) && !player.isCreative()) {
                                     player.getItemCooldownManager().set(this, 10);
                                 }
+                            } else {
+                                CantripApplicationCategory toSet = null;
+
+                                switch (bark.cantrip().applicationCategory()) {
+                                    case AREA -> toSet = CantripApplicationCategory.INSERTION;
+                                    case INSERTION -> toSet = CantripApplicationCategory.TARGETED;
+                                    case TARGETED -> toSet = CantripApplicationCategory.AREA;
+                                }
+
+                                Cantrip next = new Cantrip(bark.cantrip().name(), bark.cantrip().effect(), toSet);
+
+                                main.set(FoxgloveDataComponents.BARK, new BarkComponent(next));
+
+                                if (context.getWorld().isClient()) {
+                                    player.swingHand(player.getActiveHand());
+                                    player.playSoundToPlayer(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1, 1);
+                                }
+
+                                if (!player.getItemCooldownManager().isCoolingDown(this) && !player.isCreative()) {
+                                    player.getItemCooldownManager().set(this, 3);
+                                }
                             }
 
                             return ActionResult.FAIL;
@@ -134,19 +154,6 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                             if (context.getWorld().isClient()) {
                                 player.swingHand(player.getActiveHand());
                                 player.playSoundToPlayer(SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, 1, 1);
-                            }
-                        }
-                    }
-
-                    if (context.getWorld().getBlockState(context.getBlockPos()).isOf(Blocks.SPONGE)) {
-                        if (!bark.isEmpty()) {
-
-                            CantripComponent magicComponent = CantripComponent.KEY.get(player);
-                            magicComponent.set(200, new Cantrip("im a gummy bear", FoxgloveCantripEffects.TRANSPARENT, CantripApplicationCategory.INSERTION));
-
-                            if (context.getWorld().isClient()) {
-                                player.swingHand(player.getActiveHand());
-                                player.playSoundToPlayer(SoundEvents.ITEM_TRIDENT_RETURN, SoundCategory.BLOCKS, 1, 1);
                             }
                         }
                     }

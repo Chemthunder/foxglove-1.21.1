@@ -6,6 +6,7 @@
   "mixins": [
     "AxeItemMixin",
     "ItemMixin",
+    "ItemStackMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin"
   ],

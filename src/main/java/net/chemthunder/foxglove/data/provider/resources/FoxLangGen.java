@@ -39,5 +39,9 @@ public class FoxLangGen extends FabricLanguageProvider {
 
         translationBuilder.add("advancements.foxglove.obtain_bark.title", "Just a Bit off the Top...");
         translationBuilder.add("advancements.foxglove.obtain_bark.description", "Use some rare practices to get some unique tree bark.");
+
+        // Keybindings
+        translationBuilder.add("category.foxglove", "Foxglove");
+        translationBuilder.add("key.foxglove.open_magic_display_screen", "Open Magic Display Screen");
     }
 }

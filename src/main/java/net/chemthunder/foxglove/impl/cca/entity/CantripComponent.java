@@ -3,6 +3,7 @@ package net.chemthunder.foxglove.impl.cca.entity;
 import net.acoyt.acornlib.api.util.MiscUtils;
 import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.impl.Foxglove;
+import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -10,15 +11,19 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.Box;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.CommonTickingComponent;
+
+import java.util.List;
 
 public class CantripComponent implements AutoSyncedComponent, CommonTickingComponent {
     public static final ComponentKey<CantripComponent> KEY = MiscUtils.getOrCreateKey(Foxglove.id("cantrip"), CantripComponent.class);
     private final LivingEntity player;
 
     private int duration = 0;
+    private String lastInflictor = "";
 
     private Cantrip heldCantrip = Cantrip.EMPTY;
 
@@ -34,6 +39,7 @@ public class CantripComponent implements AutoSyncedComponent, CommonTickingCompo
         if (this.getDuration() > 0) {
             this.duration--;
             this.tickDebug();
+            this.tickEffects();
             if (this.getDuration() == 0) {
                 this.setHeldCantrip(Cantrip.EMPTY);
             }
@@ -43,6 +49,14 @@ public class CantripComponent implements AutoSyncedComponent, CommonTickingCompo
     private void tickDebug() {
         if (this.player instanceof PlayerEntity p) {
             p.sendMessage(Text.literal(this.getDuration() + " " + this.getHeldCantrip().name() + " " + this.getHeldCantrip().effect().name() + " " + this.getHeldCantrip().effect().type().asString()), true);
+        }
+    }
+
+    private void tickEffects() {
+        if (this.getHeldCantrip().effect().equals(FoxgloveCantripEffects.CLOAK)) {
+            List<LivingEntity> nearbyEntities = player.getWorld().getEntitiesByClass(LivingEntity.class, new Box(player.getBlockPos()).expand(3), entity -> entity != this.player);
+
+            player.setInvisible(nearbyEntities.isEmpty());
         }
     }
 
@@ -56,9 +70,10 @@ public class CantripComponent implements AutoSyncedComponent, CommonTickingCompo
         this.sync();
     }
 
-    public void set(int duration, Cantrip cantrip) {
+    public void set(int duration, Cantrip cantrip, String lastInflictor) {
         this.duration = duration;
         this.heldCantrip = cantrip;
+        this.lastInflictor = lastInflictor;
         this.sync();
     }
 
@@ -70,8 +85,18 @@ public class CantripComponent implements AutoSyncedComponent, CommonTickingCompo
         return this.heldCantrip;
     }
 
+    public String getLastInflictor() {
+        return this.lastInflictor;
+    }
+
+    public void setLastInflictor(String s) {
+        this.lastInflictor = s;
+        this.sync();
+    }
+
     public void readFromNbt(NbtCompound nbtCompound, RegistryWrapper.WrapperLookup wrapperLookup) {
         this.duration = nbtCompound.getInt("Duration");
+        this.lastInflictor = nbtCompound.getString("LastInflictor");
 
         if (nbtCompound.contains("HeldCantrip", NbtElement.COMPOUND_TYPE)) {
             NbtCompound compound = nbtCompound.getCompound("HeldCantrip");
@@ -83,6 +108,7 @@ public class CantripComponent implements AutoSyncedComponent, CommonTickingCompo
 
     public void writeToNbt(NbtCompound nbtCompound, RegistryWrapper.WrapperLookup wrapperLookup) {
         nbtCompound.putInt("Duration", duration);
+        nbtCompound.putString("LastInflictor", lastInflictor);
 
         if (this.heldCantrip != Cantrip.EMPTY) {
             nbtCompound.put("HeldCantrip", Cantrip.CODEC.encodeStart(wrapperLookup.getOps(NbtOps.INSTANCE), this.heldCantrip).getOrThrow());

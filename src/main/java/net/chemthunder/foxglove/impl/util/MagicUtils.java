@@ -10,6 +10,8 @@ import net.chemthunder.foxglove.impl.cca.entity.HexComponent;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveHexEffects;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.Arrays;
 import java.util.List;
@@ -84,5 +86,31 @@ public class MagicUtils {
 
     public static String getHexEffectTranslationKey(HexEffect hexEffect) {
         return "hex_effect.foxglove." + hexEffect.getName().toLowerCase();
+    }
+
+    public static boolean hasSkyAbove(BlockPos pos, World world) {
+        boolean cannotSeeSky = false;
+        for (int i = pos.getY(); i < world.getTopY(); i++) {
+            BlockPos blockPos = new BlockPos(pos.getX(), i, pos.getZ());
+            if (!world.getBlockState(blockPos).isAir() && !world.getBlockState(blockPos).isReplaceable()) {
+                cannotSeeSky = true;
+                break;
+            }
+        }
+
+        return !cannotSeeSky;
+    }
+
+    public static boolean hasSkyAbove(LivingEntity living, World world) {
+        boolean cannotSeeSky = false;
+        for (int i = living.getBlockPos().getY(); i < world.getTopY(); i++) {
+            BlockPos blockPos = new BlockPos(living.getBlockPos().getX(), i, living.getBlockPos().getZ());
+            if (!world.getBlockState(blockPos).isAir() && !world.getBlockState(blockPos).isReplaceable()) {
+                cannotSeeSky = true;
+                break;
+            }
+        }
+
+        return !cannotSeeSky;
     }
 }

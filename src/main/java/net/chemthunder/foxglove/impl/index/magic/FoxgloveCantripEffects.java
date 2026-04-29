@@ -12,17 +12,17 @@ import java.util.function.Function;
 public interface FoxgloveCantripEffects {
     List<CantripEffect> COMPS = new ArrayList<>();
 
-    CantripEffect TRANSPARENT = register("transparent", SpellCategory.CHARM); // makes player transparent
+    CantripEffect TRANSPARENT = register("transparent", SpellCategory.CHARM); // [O]
     CantripEffect AGILE = register("agile", SpellCategory.CHARM); // generic movement speed increase, becoming faster the lighter your armor protection is
     CantripEffect RABBITFOOT = register("rabbitfoot", SpellCategory.CHARM); // Speed, increasing velocity based on times jumped
     CantripEffect HANDY = register("handy", SpellCategory.CHARM); // haste + removes the one second delay before a shield can block attacks, and halves the time it takes to raise tridents or bows
-    CantripEffect CLOAK = register("cloak", SpellCategory.CHARM); // if not in the vicinity (4-6 blocks) of another entity, invisibile
+    CantripEffect CLOAK = register("cloak", SpellCategory.CHARM); // [O]
 
     CantripEffect WEIGHTED = register("weighted", SpellCategory.CURSE); // slows the player and makes them sink in water, increasing based on armor material protection value
-    CantripEffect BLIGHTED = register("blighted", SpellCategory.CURSE); // burns when under sunlight
+    CantripEffect BLIGHTED = register("blighted", SpellCategory.CURSE); // [O]
     CantripEffect LOCKJAW = register("lockjaw", SpellCategory.CURSE); // cannot eat, and cannot open chat.
     CantripEffect DIZZY = register("dizzy", SpellCategory.CURSE); // scrambles the names of items
-    CantripEffect LAZY_EYES = register("lazy_eyes", SpellCategory.CURSE); // offsets the player's crosshair >:3
+    CantripEffect LAZY_EYES = register("lazy_eyes", SpellCategory.CURSE); // [O]
 
     private static CantripEffect register(String name, Function<String, CantripEffect> factory) {
         CantripEffect component = factory.apply(name);
