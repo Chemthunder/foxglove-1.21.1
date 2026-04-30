@@ -6,12 +6,8 @@
   "mixins": [
     "AxeItemMixin",
     "ItemMixin",
-    "ItemStackMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin",
-    "handy.BowItemMixin",
-    "handy.CrossbowItemMixin",
-    "handy.TridentItemMixin"
+    "PlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

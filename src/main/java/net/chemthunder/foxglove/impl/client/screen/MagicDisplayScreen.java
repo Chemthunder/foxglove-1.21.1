@@ -42,7 +42,7 @@ public class MagicDisplayScreen extends Screen {
 
                 context.drawCenteredTextWithShadow(
                         this.textRenderer,
-                        Text.literal("Active Magic"),
+                        Text.translatable("foxglove.magic_display.title"),
                         context.getScaledWindowWidth() / 2,
                         10,
                         0xffffff
@@ -57,7 +57,7 @@ public class MagicDisplayScreen extends Screen {
 
                 context.drawTooltip(
                         this.textRenderer,
-                        Text.literal("Current Duration").formatted(Formatting.DARK_GRAY),
+                        Text.translatable("foxglove.magic_display.active.duration").formatted(Formatting.DARK_GRAY),
                         baseX + 10,
                         baseY + 55 + (MagicUtils.getCantripEffectTranslationKey(cantrip.effect()) + ".desc").length() / 2
                 );

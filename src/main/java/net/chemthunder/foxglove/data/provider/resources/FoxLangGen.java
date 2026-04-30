@@ -1,6 +1,8 @@
 package net.chemthunder.foxglove.data.provider.resources;
 
+import net.acoyt.acornlib.api.util.DataUtils;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
+import net.chemthunder.foxglove.impl.index.data.FoxgloveDamageSources;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveHexEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -47,9 +49,23 @@ public class FoxLangGen extends FabricLanguageProvider {
         translationBuilder.add("key.foxglove.open_magic_display_screen", "Open Magic Display Screen");
 
         // Magic Display Screen
+        translationBuilder.add("foxglove.magic_display.title", "Active Magic");
+
+        translationBuilder.add("foxglove.magic_display.active.duration", "Current Duration");
+
         translationBuilder.add("foxglove.magic_display.empty.name", "None");
         translationBuilder.add("foxglove.magic_display.empty.effect_name", "No Effects");
         translationBuilder.add("foxglove.magic_display.empty.effects", "Have a Cantrip inflicted on you to see its effects!");
         translationBuilder.add("foxglove.magic_display.empty.inflictor", "None");
+
+        // Damage Sources
+        DataUtils.registerDamageType(translationBuilder, FoxgloveDamageSources.FRAYING,
+                "%1$s's soul was too frail",
+                "%1$s crumpled under the pressure whilst fighting %2$s wielding %3$s",
+                "%1$s crumpled under the pressure whilst fighting %2$s"
+        );
+
+        // Misc
+        translationBuilder.add("sleep.foxglove.insomnia", "Your eyes aren't heavy right now");
     }
 }

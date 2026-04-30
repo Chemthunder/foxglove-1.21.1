@@ -5,6 +5,7 @@ import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -42,6 +43,15 @@ public abstract class LivingEntityMixin {
         LivingEntity living = (LivingEntity) (Object) this;
 
         if (MagicUtils.getCantripComponent(living).effect().equals(FoxgloveCantripEffects.INANITION)) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "sleep", at = @At(value = "HEAD"), cancellable = true)
+    private void foxglove$insomnia(BlockPos pos, CallbackInfo ci) {
+        LivingEntity living = (LivingEntity) (Object) this;
+
+        if (MagicUtils.getCantripComponent(living).effect().equals(FoxgloveCantripEffects.INSOMNIA)) {
             ci.cancel();
         }
     }

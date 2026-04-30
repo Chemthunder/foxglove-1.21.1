@@ -12,6 +12,7 @@ import net.chemthunder.foxglove.impl.component.BarkComponent;
 import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
+import net.chemthunder.foxglove.impl.index.data.FoxgloveDamageSources;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.gui.screen.Screen;
@@ -54,7 +55,18 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                         cantripComponent.set(1900, cantrip, "Self");
                     }
 
-                    stack.set(FoxgloveDataComponents.BARK, BarkComponent.EMPTY);
+                    if (stack.getCount() > 1) {
+                        ItemStack newStack = new ItemStack(FoxgloveItems.CHARMED_BARK);
+
+                        if (stack.get(DataComponentTypes.CUSTOM_NAME) != null) {
+                            newStack.set(DataComponentTypes.CUSTOM_NAME, stack.get(DataComponentTypes.CUSTOM_NAME));
+                        }
+
+                        user.giveItemStack(newStack);
+                        stack.decrement(1);
+                    } else {
+                        stack.set(FoxgloveDataComponents.BARK, BarkComponent.EMPTY);
+                    }
                 }
             }
         }
@@ -120,6 +132,12 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
                                 if (!player.getItemCooldownManager().isCoolingDown(this) && !player.isCreative()) {
                                     player.getItemCooldownManager().set(this, 10);
                                 }
+
+                                if (player.experienceLevel > 0) {
+                                    player.addExperienceLevels(-player.getRandom().nextBetween(1, 3));
+                                } else {
+                                    player.damage(player.getDamageSources().create(FoxgloveDamageSources.FRAYING), 4.0f);
+                                }
                             } else {
                                 CantripApplicationCategory toSet = null;
 
@@ -140,6 +158,12 @@ public class CharmedBarkItem extends Item implements ModelVaryingItem, Colorable
 
                                 if (!player.getItemCooldownManager().isCoolingDown(this) && !player.isCreative()) {
                                     player.getItemCooldownManager().set(this, 3);
+                                }
+
+                                if (player.experienceLevel > 0) {
+                                    player.addExperienceLevels(-player.getRandom().nextBetween(4, 6));
+                                } else {
+                                    player.damage(player.getDamageSources().create(FoxgloveDamageSources.FRAYING), 4.0f);
                                 }
                             }
 
