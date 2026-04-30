@@ -69,7 +69,7 @@ public class MagicDisplayScreen extends Screen {
                         baseY + 55 + (MagicUtils.getCantripEffectTranslationKey(cantrip.effect()) + ".desc").length() / 2
                 );
 
-                int whyDoINeedThis = baseX + 70 + cantrip.name().length();
+                int whyDoINeedThis = baseX + 70 + (cantrip.name().length());
                 if (!cantrip.isEmpty()) {
                     context.drawTooltip(
                             this.textRenderer,
@@ -81,7 +81,7 @@ public class MagicDisplayScreen extends Screen {
                     context.drawTooltip(
                             this.textRenderer,
                             Text.translatable(MagicUtils.getCantripEffectTranslationKey(cantrip.effect())).withColor(cantrip.effect().type().getColor()),
-                            baseX + 180,
+                            whyDoINeedThis + 120,
                             baseY + 15
                     );
 

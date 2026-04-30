@@ -25,6 +25,7 @@ public class FoxLangGen extends FabricLanguageProvider {
         translationBuilder.add("cantrip_effect.foxglove.rabbitfoot.desc", "The target's speed will increase by one unit for each time they jump.");
         translationBuilder.add("cantrip_effect.foxglove.handy.desc", "For the duration of the cantrip, the cooldowns between usages of items will be decreased.");
         translationBuilder.add("cantrip_effect.foxglove.cloak.desc", "If the target of the cantrip is not near an entity, they will be invisible.");
+        translationBuilder.add("cantrip_effect.foxglove.benthic.desc", "Resembling a fish, the target now can breathe underwater.");
 
         // Curses
         translationBuilder.add("cantrip_effect.foxglove.weighted.desc", "The target's speed will be decreased, this modifier will increase based on the armor protection value.");
@@ -32,6 +33,7 @@ public class FoxLangGen extends FabricLanguageProvider {
         translationBuilder.add("cantrip_effect.foxglove.lockjaw.desc", "The target will be prevented from opening their mouth (speaking or eating) for the duration of the cantrip.");
         translationBuilder.add("cantrip_effect.foxglove.dizzy.desc", "All item names will be scrambled for the duration of the cantrip.");
         translationBuilder.add("cantrip_effect.foxglove.lazy_eyes.desc", "The target's crosshair will be offset ever so slightly.");
+        translationBuilder.add("cantrip_effect.foxglove.insomnia.desc", "The target will be unable to sleep for a period of time.");
 
         // Advancement
         translationBuilder.add("advancements.foxglove.inscribe.title", "Lovebirds");

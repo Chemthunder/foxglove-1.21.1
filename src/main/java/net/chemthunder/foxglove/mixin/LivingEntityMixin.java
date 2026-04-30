@@ -1,9 +1,9 @@
 package net.chemthunder.foxglove.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,14 +13,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
-    @WrapMethod(method = "getMovementSpeed()F")
-    private float foxglove$weighted(Operation<Float> original) {
+    @ModifyReturnValue(method = "getMovementSpeed()F", at = @At("RETURN"))
+    private float foxglove$agile(float original) {
         LivingEntity living = (LivingEntity) (Object) this;
-        if (MagicUtils.getCantripComponent(living).effect() == FoxgloveCantripEffects.WEIGHTED) {
-            return original.call() - living.getArmor();
+        if (MagicUtils.getCantripComponent(living).effect().equals(FoxgloveCantripEffects.AGILE)) {
+            return original + living.getArmor();
         }
-
-        return original.call();
+        return original;
     }
 
     @Inject(method = "tick", at = @At(value = "HEAD"))
@@ -35,6 +34,15 @@ public abstract class LivingEntityMixin {
                     }
                 }
             }
+        }
+    }
+
+    @Inject(method = "applyFoodEffects", at = @At(value = "HEAD"), cancellable = true)
+    private void foxglove$inanition(FoodComponent component, CallbackInfo ci) {
+        LivingEntity living = (LivingEntity) (Object) this;
+
+        if (MagicUtils.getCantripComponent(living).effect().equals(FoxgloveCantripEffects.INANITION)) {
+            ci.cancel();
         }
     }
 }

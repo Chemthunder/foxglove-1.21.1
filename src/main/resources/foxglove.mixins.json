@@ -8,7 +8,10 @@
     "ItemMixin",
     "ItemStackMixin",
     "LivingEntityMixin",
-    "PlayerEntityMixin"
+    "PlayerEntityMixin",
+    "handy.BowItemMixin",
+    "handy.CrossbowItemMixin",
+    "handy.TridentItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
