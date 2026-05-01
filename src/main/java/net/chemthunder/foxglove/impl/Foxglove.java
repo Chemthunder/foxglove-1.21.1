@@ -5,8 +5,7 @@ import net.chemthunder.foxglove.impl.index.FoxgloveCriterions;
 import net.chemthunder.foxglove.impl.index.FoxgloveDataComponents;
 import net.chemthunder.foxglove.impl.index.FoxgloveEntities;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveHexEffects;
+import net.chemthunder.foxglove.impl.index.FoxgloveCantripEffects;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -27,7 +26,6 @@ public class Foxglove implements ModInitializer {
 
         /* Magic */
         FoxgloveCantripEffects.init();
-        FoxgloveHexEffects.init();
 
 		LOGGER.info("Hello Fabric world!");
 	}

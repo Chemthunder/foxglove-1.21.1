@@ -2,7 +2,7 @@ package net.chemthunder.foxglove.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
+import net.chemthunder.foxglove.impl.index.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;

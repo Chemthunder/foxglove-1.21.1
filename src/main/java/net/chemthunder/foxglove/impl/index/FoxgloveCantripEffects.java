@@ -1,4 +1,4 @@
-package net.chemthunder.foxglove.impl.index.magic;
+package net.chemthunder.foxglove.impl.index;
 
 import net.acoyt.acornlib.api.util.MiscUtils;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
@@ -15,7 +15,7 @@ public interface FoxgloveCantripEffects {
     CantripEffect TRANSPARENT = register("transparent", SpellCategory.CHARM); // [O]
     CantripEffect AGILE = register("agile", SpellCategory.CHARM); // generic movement speed increase, becoming faster the lighter your armor protection is
     CantripEffect BENTHIC = register("benthic", SpellCategory.CHARM); // removes drowning :thumb_up:
-    CantripEffect IDKF = register("idkf", SpellCategory.CHARM);
+    CantripEffect SATIETED = register("satieted", SpellCategory.CHARM);
     CantripEffect CLOAK = register("cloak", SpellCategory.CHARM); // [O]
 
     CantripEffect INANITION = register("inanition", SpellCategory.CURSE);

@@ -3,7 +3,7 @@ package net.chemthunder.foxglove.impl.cca.entity;
 import net.acoyt.acornlib.api.util.MiscUtils;
 import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.impl.Foxglove;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
+import net.chemthunder.foxglove.impl.index.FoxgloveCantripEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -41,18 +41,11 @@ public class CantripComponent implements AutoSyncedComponent, CommonTickingCompo
     public void tick() {
         if (this.getDuration() > 0) {
             this.duration--;
-            this.tickDebug();
             this.tickEffects();
             if (this.getDuration() == 0) {
                 this.setHeldCantrip(Cantrip.EMPTY);
             }
         }
-    }
-
-    private void tickDebug() {
-//        if (this.player instanceof PlayerEntity p) {
-//            p.sendMessage(Text.literal(this.getDuration() + " " + this.getHeldCantrip().name() + " " + this.getHeldCantrip().effect().name() + " " + this.getHeldCantrip().effect().type().asString()), true);
-//        }
     }
 
     private void tickEffects() {

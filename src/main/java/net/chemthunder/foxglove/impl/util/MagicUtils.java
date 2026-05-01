@@ -3,12 +3,8 @@ package net.chemthunder.foxglove.impl.util;
 import net.chemthunder.foxglove.api.magic.cantrip.Cantrip;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripApplicationCategory;
 import net.chemthunder.foxglove.api.magic.cantrip.CantripEffect;
-import net.chemthunder.foxglove.api.magic.hex.Hex;
-import net.chemthunder.foxglove.api.magic.hex.HexEffect;
 import net.chemthunder.foxglove.impl.cca.entity.CantripComponent;
-import net.chemthunder.foxglove.impl.cca.entity.HexComponent;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveHexEffects;
+import net.chemthunder.foxglove.impl.index.FoxgloveCantripEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -49,10 +45,6 @@ public class MagicUtils {
         return CantripComponent.KEY.get(entity).getHeldCantrip();
     }
 
-    public static Hex getHexComponent(LivingEntity entity) {
-        return HexComponent.KEY.get(entity).getHeldHex();
-    }
-
     public static CantripApplicationCategory getRandomCategory() {
         Random random = new Random();
 
@@ -73,19 +65,8 @@ public class MagicUtils {
         );
     }
 
-    public static Hex createHex() {
-        return new Hex(
-                generateName(),
-                FoxgloveHexEffects.COMPS.get(new Random().nextInt(FoxgloveHexEffects.COMPS.size()))
-        );
-    }
-
     public static String getCantripEffectTranslationKey(CantripEffect cantripEffect) {
         return "cantrip_effect.foxglove." + cantripEffect.name().toLowerCase();
-    }
-
-    public static String getHexEffectTranslationKey(HexEffect hexEffect) {
-        return "hex_effect.foxglove." + hexEffect.getName().toLowerCase();
     }
 
     public static boolean hasSkyAbove(BlockPos pos, World world) {

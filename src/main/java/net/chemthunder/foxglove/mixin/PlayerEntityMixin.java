@@ -1,7 +1,7 @@
 package net.chemthunder.foxglove.mixin;
 
 import com.mojang.datafixers.util.Either;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
+import net.chemthunder.foxglove.impl.index.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;

@@ -3,8 +3,7 @@ package net.chemthunder.foxglove.data.provider.resources;
 import net.acoyt.acornlib.api.util.DataUtils;
 import net.chemthunder.foxglove.impl.index.FoxgloveItems;
 import net.chemthunder.foxglove.impl.index.data.FoxgloveDamageSources;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveHexEffects;
+import net.chemthunder.foxglove.impl.index.FoxgloveCantripEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
@@ -19,7 +18,6 @@ public class FoxLangGen extends FabricLanguageProvider {
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
         FoxgloveItems.ITEMS.registerLang(wrapperLookup, translationBuilder);
         FoxgloveCantripEffects.pairWithLangGen(translationBuilder);
-        FoxgloveHexEffects.pairWithLangGen(translationBuilder);
 
         // Charms
         translationBuilder.add("cantrip_effect.foxglove.transparent.desc", "The target will become slightly transparent for the duration of the cantrip.");

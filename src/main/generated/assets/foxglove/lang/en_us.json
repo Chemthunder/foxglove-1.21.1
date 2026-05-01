@@ -35,9 +35,6 @@
   "foxglove.magic_display.empty.inflictor": "None",
   "foxglove.magic_display.empty.name": "None",
   "foxglove.magic_display.title": "Active Magic",
-  "hex_effect.foxglove.ensnare": "Ensnare",
-  "hex_effect.foxglove.mockery": "Mockery",
-  "hex_effect.foxglove.soulflow": "Soulflow",
   "item.foxglove.charmed_bark": "Charmed Bark",
   "key.foxglove.open_magic_display_screen": "Open Magic Display Screen",
   "sleep.foxglove.insomnia": "Your eyes aren't heavy right now"

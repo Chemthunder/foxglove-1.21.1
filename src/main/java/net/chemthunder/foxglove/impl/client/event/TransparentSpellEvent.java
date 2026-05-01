@@ -1,7 +1,7 @@
 package net.chemthunder.foxglove.impl.client.event;
 
 import net.acoyt.acornlib.api.event.PlayerOpacityEvent;
-import net.chemthunder.foxglove.impl.index.magic.FoxgloveCantripEffects;
+import net.chemthunder.foxglove.impl.index.FoxgloveCantripEffects;
 import net.chemthunder.foxglove.impl.util.MagicUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
